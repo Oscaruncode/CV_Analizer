@@ -10,3 +10,4 @@ requests
 langdetect
 sentence-transformers
 python-dateutil
+python-multipart
