@@ -3,7 +3,7 @@ import uvicorn
 from sentiment_api import router as sentiment_router
 from cv_api import router as cv_router
 
-app = FastAPI(title="Unified AI API", version="1.0")
+app = FastAPI(title="AI API", version="1.0")
 app.include_router(sentiment_router)
 app.include_router(cv_router)
 
