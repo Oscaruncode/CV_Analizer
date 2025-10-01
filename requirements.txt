@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+httpx
+pyodbc
+spacy
+python-docx
+pypdf2
+pydantic
+requests
+langdetect
+sentence-transformers
+python-dateutil
