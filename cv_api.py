@@ -1,10 +1,6 @@
-from fastapi import FastAPI, UploadFile, File, Form
+from fastapi import APIRouter, UploadFile, File, Form
 from fastapi.responses import JSONResponse
-import uvicorn
-import os
-import pyodbc
-
-# importa tus funciones ya definidas en el script
+import os, pyodbc
 from Poc_SpaCy import (
     extract_text_from_pdf,
     extract_text_from_docx,
@@ -17,7 +13,7 @@ from Poc_SpaCy import (
     extract_score_from_llama
 )
 
-app = FastAPI(title="CV Analyzer API", version="1.0")
+router = APIRouter(prefix="/cv", tags=["CV Analyzer"])
 
 # -----------------------------
 # Función para consultar la BD
@@ -60,7 +56,7 @@ def get_job_posting_and_requirements(job_id: int):
         print("❌ Error de conexión:", e)
         return ""
 
-@app.post("/analyze")
+@router.post("/analyze")
 async def analyze_cv(
     job_id: int = Form(...),
     cv_file: UploadFile = File(...)
@@ -125,12 +121,9 @@ async def analyze_cv(
         if os.path.exists(cv_temp):
             os.remove(cv_temp)
 
-@app.get("/get-job/{job_id}")
+@router.get("/get-job/{job_id}")
 async def get_job(job_id: int):
     req_text = get_job_posting_and_requirements(job_id)
     if not req_text:
         return {"error": "No se encontró la vacante o hubo un error"}
     return {"jobId": job_id, "requirementsText": req_text}
-
-if __name__ == "__main__":
-    uvicorn.run("cv_api:app", host="0.0.0.0", port=8000, reload=True)

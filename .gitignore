@@ -1,0 +1,8 @@
+# Ignorar carpeta de Visual Studio
+.vs/
+
+# Ignorar cachés de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
